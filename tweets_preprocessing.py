@@ -5,17 +5,17 @@ import re
 import schedule
 import time
 
-# Define the sentiment_analysis function
-# def sentiment_analysis(tweet):
-#     analysis = TextBlob(tweet)
-#     sentiment = analysis.sentiment.polarity
+#Define the sentiment_analysis function
+def sentiment_analysis(tweet):
+    analysis = TextBlob(tweet)
+    sentiment = analysis.sentiment.polarity
 
-#     if sentiment > 0:
-#         return 'Positive'
-#     elif sentiment == 0:
-#         return 'Neutral'
-#     else:
-#         return 'Negative'
+    if sentiment > 0:
+        return 'Positive'
+    elif sentiment == 0:
+        return 'Neutral'
+    else:
+        return 'Negative'
     
 def main():
     df = pd.read_csv('Tweets.csv')
