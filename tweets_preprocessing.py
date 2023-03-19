@@ -40,26 +40,14 @@ def main():
 
     # ns100_df = pd.read_csv('nasdaq100.csv')
     # symbol_list = ns100_df['Symbols'].to_list()
-    # ns_df = pd.read_csv('nasdaq-listed-symbols.csv')
-    # nyse_df = pd.read_csv('nyse-listed_csv.csv')
-    # symbol_list = ns_df['Symbol'].to_list() + nyse_df['ACT Symbol'].to_list()
-    # symbol_count = {} # Dictionary to store symbol counts
-    # symbol_list
+    ns_df = pd.read_csv('nasdaq-listed-symbols.csv')
+    nyse_df = pd.read_csv('nyse-listed_csv.csv')
+    symbol_list = ns_df['Symbol'].to_list() + nyse_df['ACT Symbol'].to_list()
+    symbol_count = {} # Dictionary to store symbol counts
+    symbol_list
 
 
-    # # define the pattern to extract the tickers
-    # pattern = r'\b(?:' + '|'.join(map(re.escape, symbol_list)) + r')\b'
-
-    # # extract the tickers from tweets column and store them in a new column
-    # df['tickers'] = df['tweets'].str.findall(pattern).apply(lambda x: list(set(x)))
-
-    # # drop rows with empty tickers
-    # df = df[df['tickers'].apply(lambda x: len(x) > 0)]
-
-    # # explode tickers column into multiple rows
-    # df = df.explode('tickers', ignore_index=True)
-
-    # df.to_csv('tweets_with_ticker.csv', index=False)
+   
 
 
 if __name__=='__main__':
