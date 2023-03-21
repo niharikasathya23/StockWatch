@@ -46,7 +46,19 @@ def main():
     symbol_count = {} # Dictionary to store symbol counts
     symbol_list
 
+ # # define the pattern to extract the tickers
+    pattern = r'\b(?:' + '|'.join(map(re.escape, symbol_list)) + r')\b'
 
+    # extract the tickers from tweets column and store them in a new column
+    df['tickers'] = df['tweets'].str.findall(pattern).apply(lambda x: list(set(x)))
+
+    # drop rows with empty tickers
+    df = df[df['tickers'].apply(lambda x: len(x) > 0)]
+
+    # explode tickers column into multiple rows
+    df = df.explode('tickers', ignore_index=True)
+
+    df.to_csv('tweets_with_ticker.csv', index=False)
    
 
 
