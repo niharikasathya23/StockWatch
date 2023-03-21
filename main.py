@@ -8,9 +8,7 @@ import plotly.subplots as sp
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import pymongo
-#jbvghbfghn
-#sedrftgyhujihghv
-#ertyukjhb
+
 # Mongodb settings
 mongo_password='RiKEAK5SG9BWrFJk'
 mongo_user = 'niharikasathya23'
