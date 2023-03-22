@@ -40,8 +40,14 @@ df = df.withColumn("sentiment", sentiment_analysis_udf(col("tweets")))
 # Calculate sentiment analysis results
 sentiment_counts = df.groupBy("sentiment").count().collect()
 total_tweets = df.count()
+positive_percentage = (sentiment_counts[0]["count"] / total_tweets) * 100
+neutral_percentage = (sentiment_counts[1]["count"] / total_tweets) * 100
+negative_percentage = (sentiment_counts[2]["count"] / total_tweets) * 100
 
 # Print sentiment analysis results
 print('Sentiment Analysis Results:')
 print('Total Tweets: {}'.format(total_tweets))
+print('Positive Tweets: {:.2f}%'.format(positive_percentage))
+print('Neutral Tweets: {:.2f}%'.format(neutral_percentage))
+print('Negative Tweets: {:.2f}%'.format(negative_percentage))
 
