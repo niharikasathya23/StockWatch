@@ -2,6 +2,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, udf
 from pyspark.sql.types import StringType, FloatType
 from textblob import TextBlob
+import requests
 import re
 
 # Create a Spark session

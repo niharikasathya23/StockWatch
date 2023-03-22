@@ -8,3 +8,4 @@ schedule
 tweepy
 kafka-python
 pyspark
+requests
