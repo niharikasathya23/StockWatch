@@ -13,3 +13,8 @@ consumer_key = 'cJEqEEK4vqFPsqEAaIphipZ3q'
 consumer_secret = '8BwWie7Vqjm9qQuAAErYXHkNNm5Xc5NH89gumymDYtf7lnXIcF'
 access_token = '1187325630678892545-SQ9i3KpIUZSYrK6V7NC6UFFLqjEZIa'
 access_token_secret = 'sZeApBzOXXeRXlpTiEGewIvMC6TH9dq8LXOBIgvhYgUpD'
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+
+# Create API object
+api = tweepy.API(auth)
