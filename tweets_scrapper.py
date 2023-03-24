@@ -18,3 +18,13 @@ auth.set_access_token(access_token, access_token_secret)
 
 # Create API object
 api = tweepy.API(auth)
+
+if __name__=='__main__':
+    # Define search query and number of tweets to fetch
+    search_query = ['#nasdaq','$nasdaq', '#nyse','$nyse','#stockmart','#cashtag','$nasdaq100','$nyse100','#nasdaq100','#nyse100']
+    
+    # Schedule the function to run every hour
+    schedule.every().hour.do(main, api, 100, search_query)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
