@@ -19,6 +19,26 @@ auth.set_access_token(access_token, access_token_secret)
 # Create API object
 api = tweepy.API(auth)
 
+def main(api=None, no_tweets=100, search_query=[]):
+    try:
+        for i in search_query:
+            tweets_list=[]
+            tweets_time_list=[]
+
+            # Fetch tweets using Tweepy
+            tweets = tweepy.Cursor(api.search_tweets, q=i, tweet_mode='extended').items(100)
+
+            for i in tweets: 
+                tweets_list.append(i._json['full_text'])
+                tweets_time_list.append(i._json['created_at'])
+            store(tweets_time_list, tweets_list)
+            print("Working")
+            time.sleep(15)
+            
+    except Exception as e:
+        print(e)
+        store(tweets_time_list, tweets_list)
+
 if __name__=='__main__':
     # Define search query and number of tweets to fetch
     search_query = ['#nasdaq','$nasdaq', '#nyse','$nyse','#stockmart','#cashtag','$nasdaq100','$nyse100','#nasdaq100','#nyse100']
