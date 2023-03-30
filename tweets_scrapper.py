@@ -18,6 +18,17 @@ auth.set_access_token(access_token, access_token_secret)
 
 # Create API object
 api = tweepy.API(auth)
+def store(tweets_time_list=[], tweets_list=[]):
+    # global producer
+    df = pd.DataFrame({'timestamp':tweets_time_list,'tweets':tweets_list})
+    df['timestamp'] = pd.to_datetime(df['timestamp'])
+    df.drop_duplicates(inplace=True)
+    df.to_csv('Tweets.csv', index=False, mode='a', header=False)  # Updated: set header=False
+    print(len(df))
+    df['timestamp'] = df['timestamp'].apply(lambda x: x.strftime('%Y-%m-%d %H:%M:%S'))  # Convert Timestamp to string
+    # records = df.to_dict(orient='records')
+    # for record in records:  
+    #     producer.send('demo_testing2', value=record)
 
 def main(api=None, no_tweets=100, search_query=[]):
     try:
