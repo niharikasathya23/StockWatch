@@ -51,3 +51,9 @@ print('Positive Tweets: {:.2f}%'.format(positive_percentage))
 print('Neutral Tweets: {:.2f}%'.format(neutral_percentage))
 print('Negative Tweets: {:.2f}%'.format(negative_percentage))
 
+# Read the symbol lists into PySpark DataFrames
+ns_df = spark.read.csv('nasdaq-listed-symbols.csv', header=True)
+nyse_df = spark.read.csv('nyse-listed_csv.csv', header=True)
+
+# Extract tickers from 'tweets' column using regular expressions and store them in a new column 'tickers'
+
