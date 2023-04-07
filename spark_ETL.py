@@ -1,8 +1,8 @@
+#importin all packages
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, udf
 from pyspark.sql.types import StringType, FloatType
 from textblob import TextBlob
-
 import re
 
 # Create a Spark session
