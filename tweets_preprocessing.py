@@ -8,7 +8,7 @@ import time
 #Define the sentiment_analysis function
 def sentiment_analysis(tweet):
     analysis = TextBlob(tweet)
-    # sentiment = analysis.sentiment.polarity
+    sentiment = analysis.sentiment.polarity
 
     if sentiment > 0:
         return 'Positive'
