@@ -56,4 +56,16 @@ ns_df = spark.read.csv('nasdaq-listed-symbols.csv', header=True)
 nyse_df = spark.read.csv('nyse-listed_csv.csv', header=True)
 
 # Extract tickers from 'tweets' column using regular expressions and store them in a new column 'tickers'
+symbol_list = ns_df.select("Symbol").rdd.flatMap(lambda x: x).collect() + nyse_df.select("ACT Symbol").rdd.flatMap(lambda x: x).collect()
+pattern = r'\b(?:' + '|'.join(map(re.escape, symbol_list)) + r')\b'
+extract_tickers_udf = udf(lambda tweet: re.findall(pattern, tweet), StringType())
+df = df.withColumn("tickers", extract_tickers_udf(col("tweets")))
 
+# Drop rows with empty tickers
+df = df.filter(col("tickers").isNotNull())
+
+# Explode the 'tickers' column into multiple rows
+df = df.select("timestamp", "tweets", "sentiment", "tickers").explode("tickers", "ticker")
+
+# Write the result to a CSV file
+df.write.csv("tweets_with_ticker.csv", header=True, mode="overwrite")
