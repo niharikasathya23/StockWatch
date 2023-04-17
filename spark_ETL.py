@@ -53,6 +53,7 @@ print('Neutral Tweets: {:.2f}%'.format(neutral_percentage))
 print('Negative Tweets: {:.2f}%'.format(negative_percentage))
 
 # Read the symbol lists into PySpark DataFrames
+# USing nasdaq-listed-symbols.csv and nyse-listed_csv data files 
 ns_df = spark.read.csv('nasdaq-listed-symbols.csv', header=True)
 nyse_df = spark.read.csv('nyse-listed_csv.csv', header=True)
 
