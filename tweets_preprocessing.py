@@ -37,6 +37,8 @@ def main():
     print('Positive Tweets: {:.2f}%'.format(positive_percentage))
     print('Neutral Tweets: {:.2f}%'.format(neutral_percentage))
     print('Negative Tweets: {:.2f}%'.format(negative_percentage))
+    print('Neutral Tweets: {:.2f}%'.format(neutral_percentage))
+
 
     # ns100_df = pd.read_csv('nasdaq100.csv')
     # symbol_list = ns100_df['Symbols'].to_list()
