@@ -68,3 +68,4 @@ df = df.filter(col("tickers").isNotNull())
 df = df.select("timestamp", "tweets", "sentiment", "tickers").explode("tickers", "ticker")
 
 # Write the result to a CSV file
+df.write.csv("tweets_with_ticker.csv", header=True, mode="overwrite")
