@@ -5,19 +5,58 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.subplots as sp
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import pymongo
 
+# Mongodb settings
+mongo_password='RiKEAK5SG9BWrFJk'
+mongo_user = 'niharikasathya23'
+uri = f"mongodb+srv://{mongo_user}:{mongo_password}@cluster0.ejkrmrs.mongodb.net/?retryWrites=true&w=majority"
+# Create a new client and connect to the server
+client = MongoClient(uri)
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
 # Set Streamlit app title
 st.title('StockWatch Application')
 
 # Create tabs with titles
 tabs = st.tabs(["Trending", "Top Trending", "Charts", "Correlation"])
 
+
+def read_data():
+    # Access the desired collection in the database
+    db = client['TWEETS_DB']
+    collection = db['tweet_tb']
+
+    # Retrieve data from the collection
+    documents = collection.find()
+
+    # Convert retrieved data to a list of dictionaries
+    data = list(documents)
+
+    # Create a Pandas DataFrame from the list of dictionaries
+    df = pd.DataFrame(data)
+
+    try:
+        df.drop(columns=['_id'], inplace=True)
+    except:
+        pass
+
+    return df
+
+
 # Trending (get last 1 hour & 1 day trending stocks of nasdaq 100 & nyse 100)
 def tab1():
     st.subheader("Top Trending Stocks in last 1 Day")
     
     # read csv and preprocess
-    df = pd.read_csv('tweets_with_ticker.csv')
+    # df = pd.read_csv('tweets_with_ticker.csv')
+    df = read_data()
     df['timestamp'] = pd.to_datetime(df['timestamp'])
     df['pos_sentiment'] = 0
     df['neg_sentiment'] = 0
@@ -29,6 +68,7 @@ def tab1():
     df['date'] = df['timestamp'].dt.date
 
     # #### Get last day top 10 trending Tickers on the basis of tweets
+    df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')  # Assuming the date format in 'date' column is yyyy-mm-dd
     lastdate_df = df[df['date']==df['date'].max()]
     tickers = lastdate_df.groupby('tickers').sum()
     tickers = tickers.reset_index()
@@ -107,7 +147,8 @@ def tab2():
     time_val = int(time_val.split(':')[0])
     
     # read file and create hour column
-    df = pd.read_csv('tweets_with_ticker.csv')
+    # df = pd.read_csv('tweets_with_ticker.csv')
+    df = read_data()
     df['timestamp'] = pd.to_datetime(df['timestamp'])
     df['total'] = 1
     df['hour'] = df['timestamp'].dt.hour
@@ -132,7 +173,8 @@ def tab3():
     st.subheader("Charts")
     symbol_val = st.text_input("Input Symbol", max_chars=5)
     symbol_val = str.upper(symbol_val)
-    df = pd.read_csv('tweets_with_ticker.csv')
+    # df = pd.read_csv('tweets_with_ticker.csv')
+    df = read_data()
     df['timestamp'] = pd.to_datetime(df['timestamp'])
     df['pos_sentiment'] = 0
     df['neg_sentiment'] = 0
@@ -142,6 +184,8 @@ def tab3():
     df['neu_sentiment'] = np.where(df['sentiment']=='Neutral',1,0)
     df['neg_sentiment'] = np.where(df['sentiment']=='Negative',1,0)
     df['date'] = df['timestamp'].dt.date
+    # #### Get last day top 10 trending Tickers on the basis of tweets
+    df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')  # Assuming the date format in 'date' column is yyyy-mm-dd
 
     tick_chart = df[df['tickers']==symbol_val]
     tick_chart = tick_chart.groupby('date').sum()
@@ -180,7 +224,8 @@ def tab4():
     st.subheader("Correlation Chart b/w Stock Price & No. of Mentions in Tweets")
     symbol_val = st.text_input("Input Symbol", max_chars=5, key='tab4')
     symbol_val = str.upper(symbol_val)
-    df = pd.read_csv('tweets_with_ticker.csv')
+    # df = pd.read_csv('tweets_with_ticker.csv')
+    df = read_data()
     df['timestamp'] = pd.to_datetime(df['timestamp'])
     df['pos_sentiment'] = 0
     df['neg_sentiment'] = 0
@@ -190,6 +235,9 @@ def tab4():
     df['neu_sentiment'] = np.where(df['sentiment']=='Neutral',1,0)
     df['neg_sentiment'] = np.where(df['sentiment']=='Negative',1,0)
     df['date'] = df['timestamp'].dt.date
+    # #### Get last day top 10 trending Tickers on the basis of tweets
+    df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')  # Assuming the date format in 'date' column is yyyy-mm-dd
+    
 
     if len(symbol_val)>0:
         tick_chart = df[df['tickers']==symbol_val]
