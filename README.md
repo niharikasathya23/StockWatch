@@ -143,54 +143,6 @@ Correlation Strength: 0.78 (Strong)
 
 ![Architecture Diagram](architecture-diagram.png)
 
-### High-Level Architecture Breakdown
-
-The following shows the data flow through our system:
-                              ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                    MESSAGE QUEUE LAYER (KAFKA)                      │
-├─────────────────────────────────────────────────────────────────────┤
-│  ┌──────────────┐         ┌──────────────┐                          │
-│  │   Producer   │────────▶│  Kafka Topic │                          │
-│  │  (Tweepy)    │         │  'tweets'    │                          │
-│  └──────────────┘         └──────────────┘                          │
-└─────────────────────────────┼────────────────────────────────────────┘
-                              ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                   PRE-PROCESSING LAYER                              │
-├─────────────────────────────────────────────────────────────────────┤
-│  ✓ Clean tweet text (remove URLs, mentions)                         │
-│  ✓ Extract stock tickers (AAPL, TSLA, etc.)                         │
-│  ✓ Remove duplicates                                                │
-│  ✓ Filter non-English tweets                                        │
-└─────────────────────────────┼────────────────────────────────────────┘
-                              ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│              SPARK ETL PROCESSING LAYER                             │
-├─────────────────────────────────────────────────────────────────────┤
-│  ✓ Sentiment Analysis (TextBlob)                                    │
-│  ✓ Aggregation by Ticker                                            │
-│  ✓ Time-based Bucketing                                             │
-│  ✓ Data Enrichment                                                  │
-└─────────────────────────────┼────────────────────────────────────────┘
-                              ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                   DATA STORAGE LAYER                                │
-├─────────────────────────────────────────────────────────────────────┤
-│  MongoDB Atlas (Real-time data & Aggregations)                      │
-│  AWS S3 Bucket (Raw tweets & Backup)                                │
-└─────────────────────────────┼────────────────────────────────────────┘
-                              ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│              PRESENTATION LAYER (STREAMLIT)                         │
-├─────────────────────────────────────────────────────────────────────┤
-│  Tab 1: Trending Stocks                                             │
-│  Tab 2: Hourly Trending                                             │
-│  Tab 3: Stock Charts                                                │
-│  Tab 4: Price-Sentiment Correlation                                 │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
 ---
 
 ## Installation & Setup
