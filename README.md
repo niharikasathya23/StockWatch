@@ -1,6 +1,6 @@
 # StockWatch - Complete Documentation with Demo & Examples
 
-## � Table of Contents
+## Table of Contents
 1. [Project Overview](#project-overview)
 2. [Features & Capabilities](#features--capabilities)
 3. [System Architecture](#system-architecture)
@@ -137,7 +137,7 @@ Correlation Strength: 0.78 (Strong)
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ### High-Level Architecture Diagram
 
@@ -256,7 +256,7 @@ streamlit run main.py
 
 ---
 
-## 📊 Dashboard Walkthrough
+## Dashboard Walkthrough
 
 ### Tab 1: Trending Stocks Analysis
 - **Top 10 trending tickers** by tweet volume
@@ -304,7 +304,7 @@ Backup raw tweet data for historical analysis
 
 ---
 
-## � Performance Metrics
+## Performance Metrics
 
 | Metric | Value |
 |--------|-------|
