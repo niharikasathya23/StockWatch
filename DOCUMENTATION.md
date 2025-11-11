@@ -27,6 +27,8 @@ Traditional stock market analysis relies on:
 - Technical analysis patterns
 - Fundamental analysis
 
+**But misses:** Real-time public sentiment and emerging trends
+
 ### Our Solution
 
 StockWatch bridges this gap by:
@@ -273,7 +275,7 @@ Time    Layer           Action
 
 ---
 
-## Installation & Setup
+## 💻 Installation & Setup
 
 ### Step-by-Step Setup Guide
 
@@ -506,7 +508,7 @@ Today's data:
 
 ---
 
-## API Integration
+## 🔌 API Integration
 
 ### Twitter API
 **Purpose:** Stream real-time tweets
@@ -697,8 +699,103 @@ Daily Statistics (Average):
 - Storage size: 850 MB/day
 ```
 
+---
 
-## Additional Resources
+## 🔧 Troubleshooting
+
+### Common Issues & Solutions
+
+#### Issue 1: "No data in MongoDB"
+**Cause:** Kafka not connected or tweets not streaming
+
+**Solution:**
+```bash
+# Check Kafka connection
+kafka-topics.sh --list --bootstrap-server localhost:9092
+
+# Verify producer is running
+python tweets_scraper.py
+
+# Check MongoDB connection
+mongosh "mongodb+srv://user:pass@cluster0.mongodb.net"
+```
+
+#### Issue 2: "Sentiment analysis taking too long"
+**Cause:** Too many tweets for single machine
+
+**Solution:**
+```python
+# Increase Spark partitions
+df = df.repartition(16)  # Parallel processing
+
+# Use caching for repeated queries
+df.cache()
+```
+
+#### Issue 3: "Dashboard shows old data"
+**Cause:** Cache not refreshed
+
+**Solution:**
+```bash
+# Clear Streamlit cache
+rm -rf ~/.streamlit/cache/
+
+# Restart dashboard
+streamlit run main.py --logger.level=debug
+```
+
+#### Issue 4: "AWS S3 upload fails"
+**Cause:** Invalid credentials or permissions
+
+**Solution:**
+```python
+# Verify credentials
+import boto3
+try:
+    s3 = boto3.resource('s3')
+    s3.meta.client.head_bucket(Bucket='my-bucket')
+    print("Connection successful")
+except Exception as e:
+    print(f"Error: {e}")
+```
+
+### Performance Optimization Tips
+
+1. **Increase Spark parallelism**
+   ```python
+   spark.conf.set("spark.default.parallelism", 32)
+   ```
+
+2. **Use MongoDB indexing**
+   ```javascript
+   db.tweet_tb.createIndex({"ticker": 1})
+   db.tweet_tb.createIndex({"date": 1, "ticker": 1})
+   ```
+
+3. **Enable caching in Streamlit**
+   ```python
+   @st.cache_data
+   def load_data():
+       return read_from_mongodb()
+   ```
+
+4. **Batch API calls**
+   ```python
+   # Instead of individual calls, batch 100 tweets
+   tweets_batch = [tweets[i:i+100] for i in range(0, len(tweets), 100)]
+   ```
+
+---
+
+## 📞 Support & Contact
+
+- **GitHub Issues:** [Report bugs](https://github.com/niharikasathya23/StockWatch/issues)
+- **Email:** niharikasathya23@gmail.com
+- **LinkedIn:** [Connect with developer](https://linkedin.com/in/niharikasathya23)
+
+---
+
+## 📄 Additional Resources
 
 ### External Documentation
 - [Tweepy Documentation](https://docs.tweepy.org/)
@@ -711,3 +808,21 @@ Daily Statistics (Average):
 - "Predicting Stock Market Using Social Media Sentiment" - IEEE Papers
 - "Real-time Sentiment Analysis for Trading" - Medium Articles
 - "Machine Learning for Stock Price Prediction" - Arxiv
+
+---
+
+## 📝 Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0.0 | 2025-11-10 | Initial release |
+| 0.9.0 | 2025-10-15 | Beta testing |
+| 0.5.0 | 2025-09-01 | Development phase |
+
+---
+
+**Last Updated:** November 10, 2025  
+**Maintained By:** Niharika Sathya  
+**License:** MIT
+
+🚀 **Happy Analyzing!**
