@@ -6,15 +6,13 @@
 3. [System Architecture](#system-architecture)
 4. [Installation & Setup](#installation--setup)
 5. [Dashboard Walkthrough](#dashboard-walkthrough)
-6. [Demo Scenarios](#demo-scenarios)
-7. [API Integration](#api-integration)
-8. [Data Pipeline](#data-pipeline)
-9. [Performance Metrics](#performance-metrics)
-10. [Troubleshooting](#troubleshooting)
+6. [API Integration](#api-integration)
+7. [Data Pipeline](#data-pipeline)
+8. [Performance Metrics](#performance-metrics)
 
 ---
 
-## 🎯 Project Overview
+## Project Overview
 
 ### What is StockWatch?
 
@@ -41,15 +39,15 @@ StockWatch bridges this gap by:
 
 ### Key Value Propositions
 
-✅ **Real-time Insights** - Updated sentiment data every hour  
-✅ **Scalable Processing** - Handle millions of tweets using Spark  
-✅ **Visual Analytics** - Beautiful interactive Streamlit dashboard  
-✅ **Correlation Analysis** - See relationships between tweets and stock prices  
-✅ **Hourly Breakdowns** - Understand trends at different times of day  
+**Real-time Insights** - Updated sentiment data every hour  
+**Scalable Processing** - Handle millions of tweets using Spark  
+**Visual Analytics** - Beautiful interactive Streamlit dashboard  
+**Correlation Analysis** - See relationships between tweets and stock prices  
+**Hourly Breakdowns** - Understand trends at different times of day  
 
 ---
 
-## 🚀 Features & Capabilities
+## Features & Capabilities
 
 ### Feature 1: Live Trending Stocks (Last 24 Hours)
 **What it does:** Shows top 10 stocks with most social media mentions
@@ -95,9 +93,9 @@ Market Close (16:00 PM):
 **What it does:** Deep dive into individual stock performance
 
 **Visualizations:**
-- 📈 Daily tweet volume trends
-- 📊 Sentiment scores over time
-- 📋 Detailed data tables
+- Daily tweet volume trends
+- Sentiment scores over time
+- Detailed data tables
 
 **Use case:** Monitor specific stock you're interested in
 
@@ -114,9 +112,9 @@ AAPL Stock Analysis (Last 30 Days):
 **What it does:** Compare stock price movements with sentiment trends
 
 **Displays:**
-- 🕯️ Candlestick chart (stock price)
-- 📈 Overlay with sentiment bars
-- 🔗 Correlation visualization
+- Candlestick chart (stock price)
+- Overlay with sentiment bars
+- Correlation visualization
 
 **Insights gained:**
 - Does sentiment lead price movements?
@@ -199,7 +197,7 @@ Correlation Strength: 0.78 (Strong)
 
 ---
 
-## 💻 Installation & Setup
+## Installation & Setup
 
 ### Step-by-Step Setup Guide
 
@@ -256,8 +254,6 @@ jupyter notebook spark_ETL.py
 streamlit run main.py
 ```
 
-Dashboard available at: `http://localhost:8501`
-
 ---
 
 ## 📊 Dashboard Walkthrough
@@ -282,25 +278,8 @@ Dashboard available at: `http://localhost:8501`
 - Overlay with tweet sentiment
 - Identify correlation between social buzz and price movements
 
----
 
-## 🎬 Demo Scenarios
-
-### Scenario 1: Identify Emerging Opportunity
-Look for stocks with **rising positive sentiment** and compare to price increase
-
-### Scenario 2: Monitor Stock During Market Event
-Track sentiment changes in real-time during announcements
-
-### Scenario 3: Find Optimal Trading Times
-Discover which stocks trend at specific times of day
-
-### Scenario 4: Predict Price Movements
-Use sentiment to predict next day's price movement with historical accuracy
-
----
-
-## 🔌 API Integration
+## API Integration
 
 ### Twitter API
 Stream real-time tweets using Tweepy credentials
@@ -313,7 +292,7 @@ Backup raw tweet data for historical analysis
 
 ---
 
-## 🔄 Data Pipeline
+## Data Pipeline
 
 ### Sample Data Journey
 1. **Input Tweet** → Raw tweet from Twitter
@@ -336,42 +315,3 @@ Backup raw tweet data for historical analysis
 | API uptime | 99.8% |
 
 ---
-
-## � Troubleshooting
-
-### Common Issues
-- **No data in MongoDB**: Check Kafka connection and tweets_scraper.py
-- **Slow sentiment analysis**: Increase Spark parallelism
-- **Old data in dashboard**: Clear Streamlit cache
-- **S3 upload fails**: Verify AWS credentials and permissions
-
----
-
-## � Support & Contact
-
-- **GitHub Issues:** Report bugs on GitHub
-- **Email:** niharikasathya23@gmail.com
-- **LinkedIn:** Connect with developer
-
----
-
-## � Project Structure
-
-```
-StockWatch/
-├── main.py                          # Streamlit dashboard
-├── spark_ETL.py                     # Spark ETL pipeline
-├── tweets_scraper.py                # Twitter data collection
-├── tweets_preprocessing.py          # Data cleaning
-├── kafka_producer.ipynb             # Kafka setup
-├── kafka_consumer.ipynb             # Data consumption
-├── requirements.txt                 # Dependencies
-├── README.md                        # This file
-├── DOCUMENTATION.md                 # Detailed docs
-└── nasdaq-listed-symbols.csv        # Ticker lists
-```
-
----
-
-**Last Updated:** November 10, 2025  
-**Made with ❤️ for stock market enthusiasts and data engineers**
