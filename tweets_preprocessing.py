@@ -10,8 +10,8 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
 # Mongodb settings
-mongo_password='RiKEAK5SG9BWrFJk'
-mongo_user = 'niharikasathya23'
+mongo_password = os.getenv('MONGO_PASSWORD')
+mongo_user = os.getenv('MONGO_USER')
 uri = f"mongodb+srv://{mongo_user}:{mongo_password}@cluster0.ejkrmrs.mongodb.net/?retryWrites=true&w=majority"
 # Create a new client and connect to the server
 client = MongoClient(uri)
@@ -23,8 +23,8 @@ except Exception as e:
     print(e)
 
 # Provide your AWS access key and secret access key
-aws_access_key_id = 'YOUR_AWS_KEY'
-aws_secret_access_key = 'YOUR_AWS_SECRET'
+aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
+aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
 
 # Specify the S3 bucket name and file key
 bucket_name = 'stock-market-kafka-project-asra1'
